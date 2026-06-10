@@ -77,9 +77,20 @@ function CandidateSourceSelector({ onAdd }: { onAdd: (candidates: any[]) => void
     } finally { setLoading(false); }
   }
 
+  const SUPPORTED_EXTS = ['.pdf', '.docx', '.jpg', '.jpeg', '.png', '.webp'];
+
   async function handleFiles(e: React.ChangeEvent<HTMLInputElement>) {
     const files = Array.from(e.target.files || []);
     if (!files.length) return;
+
+    // Filter unsupported files
+    const invalid = files.filter(f => !SUPPORTED_EXTS.some(ext => f.name.toLowerCase().endsWith(ext)));
+    if (invalid.length) {
+      setError(`Unsupported file type: ${invalid.map(f => f.name).join(', ')}. Supported: PDF, DOCX, JPG, PNG, WEBP`);
+      e.target.value = '';
+      return;
+    }
+
     setLoading(true);
     setError('');
     const collected: any[] = [];
@@ -142,13 +153,12 @@ function CandidateSourceSelector({ onAdd }: { onAdd: (candidates: any[]) => void
       {mode === 'file' && (
         <div className="space-y-2">
           <p className="text-xs text-gray-500">Upload one or more resumes (PDF, Word, or image). Each file = one candidate.</p>
-          <label className="flex items-center gap-2 cursor-pointer">
+          <label className="relative inline-flex cursor-pointer">
             <span className="btn-secondary">{loading ? parseProgress || 'Parsing...' : 'Choose Files'}</span>
             <input
               type="file"
-              accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp"
-              multiple
-              className="hidden"
+              accept=".pdf,.docx,.jpg,.jpeg,.png,.webp"
+              className="absolute inset-0 opacity-0 cursor-pointer"
               onChange={handleFiles}
               disabled={loading}
             />

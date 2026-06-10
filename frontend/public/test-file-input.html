@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Test 1: no accept, single</h2>
+<input type="file"><br><br>
+
+<h2>Test 2: accept pdf only, single</h2>
+<input type="file" accept=".pdf"><br><br>
+
+<h2>Test 3: accept pdf+image, single</h2>
+<input type="file" accept=".pdf,.docx,.jpg,.jpeg,.png,.webp"><br><br>
+
+<h2>Test 4: accept pdf+image, multiple</h2>
+<input type="file" accept=".pdf,.docx,.jpg,.jpeg,.png,.webp" multiple><br><br>
+
+<h2>Test 5: hidden class + label, single</h2>
+<style>.hidden{display:none}</style>
+<label style="cursor:pointer;border:1px solid #ccc;padding:8px 16px;border-radius:4px;">
+  Choose File
+  <input type="file" accept=".pdf,.docx,.jpg,.jpeg,.png,.webp" class="hidden">
+</label><br><br>
+
+<h2>Test 6: hidden + multiple + label</h2>
+<label style="cursor:pointer;border:1px solid #ccc;padding:8px 16px;border-radius:4px;">
+  Choose File (multi)
+  <input type="file" accept=".pdf,.docx,.jpg,.jpeg,.png,.webp" class="hidden" multiple>
+</label>
+</body>
+</html>
